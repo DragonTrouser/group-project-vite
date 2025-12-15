@@ -1,0 +1,4 @@
+# Quick start
+1. Build image: docker build -t group-project-vite .
+2. Run container: docker run -it --rm -v "${PWD}:/app" -w /app -p 5173:5173 group-project-vite
+3. Open http://localhost:5173/ in your browser
