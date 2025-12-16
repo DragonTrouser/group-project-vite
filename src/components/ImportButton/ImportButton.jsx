@@ -9,6 +9,15 @@ export default function ImportButton({ onImport }) {
         reader.onload = (event) => {
             const text = event.target.result
             const rods = parseFile(text)
+
+            const allColors = rods.flat()
+            const numColors = allColors.length > 0 ? Math.max(...allColors) : 0
+            const targetRodsCount = numColors + 1
+
+            while (rods.length < targetRodsCount) {
+                rods.push([])
+            }
+
             onImport(rods)
         }
         reader.readAsText(file)
@@ -23,15 +32,13 @@ export default function ImportButton({ onImport }) {
         const rods = []
         const numCols = lines[0].split(/\s+/).length
         
-        for (let i = 0; i < numCols; i++)
-            rods.push([])
+        for (let i = 0; i < numCols; i++) rods.push([])
         
         lines.forEach((line) => {
             const values = line.split(/\s+/)
             values.forEach((v, i) => {
                 const colorIndex = parseInt(v, 10)
-                if (colorIndex !== 0) 
-                    rods[i].push(colorIndex)
+                if (colorIndex !== 0) rods[i].push(colorIndex)
             })
         })
         
